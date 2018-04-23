@@ -59,6 +59,7 @@ private[integration] object Utils {
         s"((${toSQL(or.left)}) OR (${toSQL(or.right)}))"
       case not: NotWhere =>
         s"!(${not.input})"
+      case _: BlankWhere => "1=1"
       case _ => "1=1"
     }
   }

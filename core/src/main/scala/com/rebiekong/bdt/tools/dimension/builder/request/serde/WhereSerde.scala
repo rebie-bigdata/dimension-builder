@@ -23,6 +23,8 @@ object WhereSerde {
         case not: NotWhere =>
           jsonGenerator.writeStringField("type", "not")
           jsonGenerator.writeObjectField("input", not.input)
+        case _: BlankWhere =>
+          jsonGenerator.writeStringField("type", "blank")
         case value: ValueWhere =>
           jsonGenerator.writeStringField("type", "value")
           jsonGenerator.writeStringField("field", value.dimension.name)
@@ -60,6 +62,8 @@ object WhereSerde {
         case "not" =>
           val input = parseNode(node.get("input"))
           input.not()
+        case "blank" =>
+          new BlankWhere
         case "value" =>
           // sub type判断
           val subType = node.get("sub_type").asText()
