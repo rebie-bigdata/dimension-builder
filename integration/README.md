@@ -1,7 +1,7 @@
 ## integration
 
 #### kylin
-```scala
+```
 import com.rebiekong.bdt.tools.dimension.builder.integration._
 import com.rebiekong.bdt.tools.dimension.builder.request.RequestModel
 

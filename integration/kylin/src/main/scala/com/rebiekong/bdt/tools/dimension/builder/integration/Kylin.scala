@@ -1,11 +1,13 @@
 package com.rebiekong.bdt.tools.dimension.builder.integration
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.rebiekong.bdt.tools.dimension.builder.request.RequestModel
+import com.rebiekong.bdt.tools.dimension.builder.request.models.RequestMeasureModel
+import com.rebiekong.bdt.tools.dimension.builder.utils.SQLUtils
 
 import scala.collection.convert.wrapAll._
+import scala.language.implicitConversions
 
-class KylinSQL(requestModel: RequestModel) {
+class Kylin(requestModel: RequestMeasureModel) {
   def buildKylinSQL(): String = {
 
     val basicWhere = requestModel.where
@@ -23,7 +25,7 @@ class KylinSQL(requestModel: RequestModel) {
          | $groupBy,
          | $cField
          |FROM ${i._2.head.table}
-         |WHERE ${Utils.toSQL(mWhere)}
+         |WHERE ${SQLUtils.toSQL(mWhere)}
          |GROUP BY $groupBy
        """.stripMargin
     })
@@ -37,7 +39,7 @@ class KylinSQL(requestModel: RequestModel) {
          |(SELECT
          | $groupBy
          |FROM $tableName
-         |WHERE ${Utils.toSQL(basicWhere)}
+         |WHERE ${SQLUtils.toSQL(basicWhere)}
          |GROUP BY $groupBy)
        """.stripMargin
     }))
@@ -56,16 +58,24 @@ class KylinSQL(requestModel: RequestModel) {
 
     }
 
-    if (requestModel.orderBy.size() > 0) {
-      result.append(" ORDER BY ")
-      result.append(String.join(",", requestModel.orderBy.map(orderBy => {
-        s"${orderBy.fieldName} ${if (orderBy.isAsc()) "ASC" else "DESC"}"
-      })))
+    if (requestModel.pagination != null) {
+      if (requestModel.pagination.orderBy.size() > 0) {
+        result.append(" ORDER BY ")
+        result.append(String.join(",", requestModel.pagination.orderBy.map(orderBy => {
+          s"${orderBy.fieldName} ${if (orderBy.isAsc()) "ASC" else "DESC"}"
+        })))
+      }
+      if (requestModel.pagination.limit > 0) {
+        result.append(s" LIMIT ${requestModel.pagination.offset},${requestModel.pagination.limit}")
+      }
     }
-    if (requestModel.limit > 0) {
-      result.append(" LIMIT " + requestModel.limit)
-    }
-
     result.toString()
+  }
+
+}
+
+object Kylin {
+  implicit def kylinConvent(requestModel: RequestMeasureModel): Kylin = {
+    new Kylin(requestModel)
   }
 }

@@ -9,15 +9,18 @@
     <packaging>pom</packaging>
     <version>1.1</version>
     <modules>
-        <module>integration</module>
         <module>core</module>
+        <module>integration/kylin</module>
+        <module>integration/elasticsearch</module>
     </modules>
+    <name>DimensionBuilder</name>
 
     <properties>
         <java.version>1.8.0</java.version>
         <jackson.version>2.9.5</jackson.version>
         <scala.version>2.11</scala.version>
         <scala.binary.version>2.11.8</scala.binary.version>
+        <elasticsearch.version>6.2.2</elasticsearch.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -35,6 +38,12 @@
                 <groupId>com.rebiekong.bdt.tools.dimension-builder</groupId>
                 <artifactId>core</artifactId>
                 <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.elasticsearch.client</groupId>
+                <artifactId>transport</artifactId>
+                <version>${elasticsearch.version}</version>
+                <optional>true</optional>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -1,13 +1,14 @@
-package com.rebiekong.bdt.tools.dimension.builder.request
+package com.rebiekong.bdt.tools.dimension.builder.request.models
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.rebiekong.bdt.tools.dimension.builder.request.{OrderBy, Pagination}
 import com.rebiekong.bdt.tools.dimension.builder.request.field.Field
 import com.rebiekong.bdt.tools.dimension.builder.request.where.Where
 
 import scala.collection.convert.wrapAll._
 import scala.collection.mutable.ListBuffer
 
-class RequestModel {
+class RequestMeasureModel {
 
   @JsonProperty("fields")
   var fields: java.util.List[Field] = _
@@ -15,14 +16,8 @@ class RequestModel {
   var where: Where = _
   @JsonProperty("group_by")
   var groupBy: java.util.List[String] = _
-  @JsonProperty("order_by")
-  var orderBy: java.util.List[OrderBy] = _
-  @JsonProperty("limit")
-  var limit: Int = _
-
-  def setLimit(limit: Int): Unit = {
-    this.limit = limit
-  }
+  @JsonProperty("pagination")
+  var pagination: Pagination = _
 
   def setWhere(where: Where): Unit = {
     this.where = where
@@ -32,25 +27,21 @@ class RequestModel {
     this.groupBy = groupBy
   }
 
-  def setOrderBy(orderBy: java.util.List[OrderBy]): Unit = {
-    this.orderBy = orderBy
-  }
-
   def setFields(fields: java.util.List[Field]): Unit = {
     this.fields = fields
   }
 
-  def getFields():java.util.List[Field]={
+  def getFields(): java.util.List[Field] = {
     this.fields
   }
 }
 
-object RequestModel {
+object RequestMeasureModel {
 
 
-  def builder = new RequestModelBuilder
+  def builder = new RequestMeasureModelBuilder
 
-  class RequestModelBuilder {
+  class RequestMeasureModelBuilder {
 
     private var where: Where = _
     private var limit: Int = 20
@@ -58,27 +49,27 @@ object RequestModel {
     private val groupBy: ListBuffer[String] = ListBuffer.empty[String]
     private val orderBy: ListBuffer[OrderBy] = ListBuffer.empty[OrderBy]
 
-    def setWhere(where: Where): RequestModelBuilder = {
+    def setWhere(where: Where): RequestMeasureModelBuilder = {
       this.where = where
       this
     }
 
-    def setLimit(limit: Int): RequestModelBuilder = {
+    def setLimit(limit: Int): RequestMeasureModelBuilder = {
       this.limit = limit
       this
     }
 
-    def addField(field: Field): RequestModelBuilder = {
+    def addField(field: Field): RequestMeasureModelBuilder = {
       this.fields.append(field)
       this
     }
 
-    def addGroupBy(field: String): RequestModelBuilder = {
+    def addGroupBy(field: String): RequestMeasureModelBuilder = {
       this.groupBy.append(field)
       this
     }
 
-    def addOrderBy(orderBy: String, isAsc: Boolean = true): RequestModelBuilder = {
+    def addOrderBy(orderBy: String, isAsc: Boolean = true): RequestMeasureModelBuilder = {
       val o = new OrderBy
       o.setFieldName(orderBy)
       o.setAsc(isAsc)
@@ -86,13 +77,15 @@ object RequestModel {
       this
     }
 
-    def create: RequestModel = {
-      val r = new RequestModel()
+    def create: RequestMeasureModel = {
+      val pagination = new Pagination
+      pagination.orderBy = orderBy
+      pagination.limit = limit
+      val r = new RequestMeasureModel()
       r.setWhere(where)
       r.setFields(fields)
       r.setGroupBy(groupBy)
-      r.setOrderBy(orderBy)
-      r.setLimit(limit)
+      r.pagination = pagination
       r
     }
   }

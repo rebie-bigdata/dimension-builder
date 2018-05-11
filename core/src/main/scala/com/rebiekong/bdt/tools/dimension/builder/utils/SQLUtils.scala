@@ -1,9 +1,10 @@
-package com.rebiekong.bdt.tools.dimension.builder.integration
+package com.rebiekong.bdt.tools.dimension.builder.utils
 
 import com.rebiekong.bdt.tools.dimension.builder.core.dimension.{DiscreteDimension, RangeDimension}
 import com.rebiekong.bdt.tools.dimension.builder.request.where._
 
-private[integration] object Utils {
+object SQLUtils {
+
 
   def toSQL(where: Where): String = {
     where match {
@@ -16,7 +17,7 @@ private[integration] object Utils {
             val haveUpperBound = range.upperBound != null
 
             {
-              if (haveUpperBound) {
+              if (!haveUpperBound) {
                 range.lowerBound
               } else {
                 range.upperBound
@@ -63,4 +64,5 @@ private[integration] object Utils {
       case _ => "1=1"
     }
   }
+
 }
