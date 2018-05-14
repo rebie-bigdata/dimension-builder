@@ -6,20 +6,25 @@
         <artifactId>parent</artifactId>
         <groupId>com.rebiekong.bdt.tools.dimension-builder</groupId>
         <version>1.1.1</version>
+        <relativePath>../../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <name>DimensionBuilder :: Core</name>
-    <artifactId>core</artifactId>
-
+    <artifactId>integration-mds-tools</artifactId>
+    <name>DimensionBuilder :: Integration-MDS-Tools</name>
     <dependencies>
         <dependency>
             <groupId>org.scala-lang</groupId>
             <artifactId>scala-library</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
+            <groupId>com.rebiekong.bdt.tools.mds-tools</groupId>
+            <artifactId>commons</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.rebiekong.bdt.tools.dimension-builder</groupId>
+            <artifactId>core</artifactId>
         </dependency>
     </dependencies>
     <build>
@@ -27,6 +32,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
             </plugin>
             <plugin>
                 <groupId>net.alchim31.maven</groupId>
@@ -38,4 +47,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>

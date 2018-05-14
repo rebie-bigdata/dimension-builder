@@ -7,11 +7,12 @@
     <groupId>com.rebiekong.bdt.tools.dimension-builder</groupId>
     <artifactId>parent</artifactId>
     <packaging>pom</packaging>
-    <version>1.1</version>
+    <version>1.1.1</version>
     <modules>
         <module>core</module>
         <module>integration/kylin</module>
         <module>integration/elasticsearch</module>
+        <module>integration/mds-tools</module>
     </modules>
     <name>DimensionBuilder</name>
 
@@ -21,6 +22,7 @@
         <scala.version>2.11</scala.version>
         <scala.binary.version>2.11.8</scala.binary.version>
         <elasticsearch.version>6.2.2</elasticsearch.version>
+        <mds-tools.version>1.0</mds-tools.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -43,7 +45,11 @@
                 <groupId>org.elasticsearch.client</groupId>
                 <artifactId>transport</artifactId>
                 <version>${elasticsearch.version}</version>
-                <optional>true</optional>
+            </dependency>
+            <dependency>
+                <groupId>com.rebiekong.bdt.tools.mds-tools</groupId>
+                <artifactId>commons</artifactId>
+                <version>${mds-tools.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

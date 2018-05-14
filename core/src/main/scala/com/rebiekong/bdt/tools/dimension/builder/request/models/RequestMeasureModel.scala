@@ -80,7 +80,7 @@ object RequestMeasureModel {
     def create: RequestMeasureModel = {
       val pagination = new Pagination
       pagination.orderBy = orderBy
-      pagination.limit = limit
+      pagination.pageSize = limit
       val r = new RequestMeasureModel()
       r.setWhere(where)
       r.setFields(fields)

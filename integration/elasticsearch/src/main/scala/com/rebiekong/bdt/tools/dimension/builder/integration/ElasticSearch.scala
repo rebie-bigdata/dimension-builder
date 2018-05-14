@@ -11,7 +11,9 @@ import org.elasticsearch.search.sort.{SortBuilders, SortOrder}
 import scala.collection.convert.wrapAll._
 import scala.language.implicitConversions
 
-
+/**
+  实验中
+ */
 class ElasticSearch(requestModel: RequestItemModel) {
 
   def read(client: Client): Unit = {
@@ -21,7 +23,7 @@ class ElasticSearch(requestModel: RequestItemModel) {
       .setTypes(d(1))
       .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
     search.setPostFilter(caseWhereToEs(requestModel.where))
-    search.setSize(requestModel.pagination.limit)
+    search.setSize(requestModel.pagination.pageSize)
     requestModel.pagination.orderBy
       .foreach(
         o => search.addSort(SortBuilders.fieldSort(o.fieldName).order(

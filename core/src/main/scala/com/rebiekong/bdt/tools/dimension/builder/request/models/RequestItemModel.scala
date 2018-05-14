@@ -26,7 +26,8 @@ object RequestItemModel {
   class RequestItemModelBuilder {
 
     private var where: Where = _
-    private var limit: Int = 20
+    private var pageSize: Int = 20
+    private var page: Int = 1
     private val orderBy: ListBuffer[OrderBy] = ListBuffer.empty[OrderBy]
     private var field: Field = _
 
@@ -41,8 +42,13 @@ object RequestItemModel {
       this
     }
 
-    def setLimit(limit: Int): RequestItemModelBuilder = {
-      this.limit = limit
+    def setPageSize(pageSize: Int): RequestItemModelBuilder = {
+      this.pageSize = pageSize
+      this
+    }
+
+    def setPage(page: Int): RequestItemModelBuilder = {
+      this.page = page
       this
     }
 
@@ -57,7 +63,8 @@ object RequestItemModel {
     def create: RequestItemModel = {
       val pagination = new Pagination
       pagination.orderBy = orderBy
-      pagination.limit = limit
+      pagination.page = page
+      pagination.pageSize = pageSize
       val r = new RequestItemModel()
       r.where = where
       r.field = field

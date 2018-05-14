@@ -65,9 +65,6 @@ class Kylin(requestModel: RequestMeasureModel) {
           s"${orderBy.fieldName} ${if (orderBy.isAsc()) "ASC" else "DESC"}"
         })))
       }
-      if (requestModel.pagination.limit > 0) {
-        result.append(s" LIMIT ${requestModel.pagination.offset},${requestModel.pagination.limit}")
-      }
     }
     result.toString()
   }
