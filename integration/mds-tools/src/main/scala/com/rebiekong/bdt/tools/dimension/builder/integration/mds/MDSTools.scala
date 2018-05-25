@@ -1,12 +1,12 @@
 package com.rebiekong.bdt.tools.dimension.builder.integration.mds
 
 import com.rebiekong.bdt.mds.commons.SearchModel
-import com.rebiekong.bdt.tools.dimension.builder.core.dimension.{Dimension, DiscreteDimension, RangeDimension}
+import com.rebiekong.bdt.tools.dimension.builder.core.dimension.{DiscreteDimension, RangeDimension}
 import com.rebiekong.bdt.tools.dimension.builder.request.models.RequestItemModel
 import com.rebiekong.bdt.tools.dimension.builder.request.where._
 
-import scala.collection.mutable
 import scala.collection.convert.wrapAll._
+import scala.collection.mutable
 import scala.language.implicitConversions
 
 class MDSTools(requestItemModel: RequestItemModel) {
